@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Assuntos de DOM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet" />
+    <style>
+         *,
+        *::before,
+        *::after {
+            margin: 0;
+        }
+.container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+body {
+          align-items: center;
+          background-image: url("ifpe.jpeg");
+          background-attachment: fixed;
+         background-repeat: no-repeat;
+        background-size: cover;           
+}
+h1 { 
+    color: rgba(8, 0, 0, 0.774); 
+    font-size: 80px ;          
+}
+div#topo {
+            height: 140px;
+            background-color: rgba(20, 173, 122, 0.856);
+        }
+
+.container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+.limpar {
+         clear: both;
+         cursor: pointer;
+}
+.item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+.item span {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-buttons">
+            <a href="#">Seja Bem vindo(a)</a>
+        </div>
+    </header>
+    <div id="topo">
+        <header>
+            <h2 Align="center">
+                <h1 style="text-align: center; font-family:cursive;"> Fardamentos JF</h1>
+
+            </header>
+        </h2><br>
+        <p style="text-align: center;color: rgba(7, 18, 22, 0.856); font-size: 25px; margin-left: 30px; font-family:cursive;"><br>
+            Fardamentos de Instituto Federal Online</p>
+        <div class="container">
+              <h5>Selecione </h5>
+            <select name="busca" id="busca">
+                <option value="">Selecione do seu IFPE</option>
+                <option value="1">IFPE Campus Recife</option>
+                <option value="2">IFPE Campus Jaboatão dos Guararapes </option>
+            </select>
+            <br>
+            <h5>Click</h5>
+            <select style="cursor: pointer; width: 20%; padding: 10px; font-size: 16px; font-family: cursive;" name="tamanho" id="tamanho">
+                <option value="">Click no seu tamanho da sua camisa</option>
+                <option value="1">P</option>
+                <option value="2">M</option>
+                <option value="3">G</option>
+            </select>
+            <br>
+            <h5>Você quer mais ajustado ao corpo?</h5>
+            <input style="width: 30%; padding: 10px; font-size: 16px;" type="text" id="input-text">
+            <button style="cursor: pointer; width: 5%; padding: 10px; font-size: 16px;" onclick="adicionarItem()">Enviar</button>
+            <div id="resultados"></div>
+        </div>
+        <script>
+            let ultimaRoupa = 1;
+
+            function adicionarItem() {
+                var busca = document.getElementById("busca").options[document.getElementById("busca").selectedIndex].text;
+                var tamanho = document.getElementById("tamanho").options[document.getElementById("tamanho").selectedIndex].text;
+                var campoTexto = document.getElementById("input-text").value;
+
+                var resultadosDiv = document.getElementById("resultados");
+
+                var novoItem = document.createElement("div");
+                novoItem.className = "item";
+                novoItem.innerHTML = `
+                    <p>Roupas ${ultimaRoupa}: ${busca}</p>
+                    <p>Tamanho: ${tamanho}</p>
+                    <p>Campo de Texto: ${campoTexto}</p><br>
+                    <span class="excluir" onclick="excluirItem(this)"> Excluir </span><br>
+                    <span class="editar" onclick="editarItem(this)"> Editar </span><br>
+                `;
+
+                resultadosDiv.appendChild(novoItem);
+                document.getElementById("busca").value = "0";
+                document.getElementById("tamanho").value = "0";
+                document.getElementById("input-text").value = "";
+                ultimaRoupa++;
+            }
+
+            function excluirItem(elemento) {
+                elemento.parentElement.remove();
+            }
+
+            function editarItem(elemento) {
+                var item = elemento.parentElement;
+                var roupas = item.querySelector("p:nth-child(1)").textContent.split(": ")[1];
+                var tamanho = item.querySelector("p:nth-child(2)").textContent.split(": ")[1];
+                var campoTexto = item.querySelector("p:nth-child(3)").textContent.split(": ")[1];
+
+                document.getElementById("busca").value = roupas;
+                document.getElementById("tamanho").value = tamanho;
+                document.getElementById("input-text").value = campoTexto;
+
+                item.remove();
+                ultimaRoupa--;
+            }
+        </script>
+    </body>
+</html>
